@@ -1,0 +1,53 @@
+[MASTER]
+# A lista de módulos a serem verificados.
+# A lintagem será aplicada em todo o código na pasta `tempotech`, ignorando testes.
+ignore=tests
+ignore-patterns=.*_test.py, .*_spec.py
+
+[MESSAGES CONTROL]
+# Habilita todas as mensagens e desabilita apenas as que são estritamente irrelevantes para o projeto.
+# Manter as docstrings ativadas é uma boa prática para documentação e para evitar código "mágico".
+# Desabilitado apenas `unnecessary-pass` para permitir que o código de `interface` seja limpo.
+# `too-few-public-methods` é desabilitado para permitir classes de modelo (schemas) pequenas.
+# `missing-class-docstring` é desabilitado para schemas e dataclasses.
+disable=
+    unnecessary-pass,
+    too-few-public-methods,
+    missing-class-docstring,
+    
+[FORMAT]
+# Define o comprimento máximo da linha. A lintagem falhará se ultrapassar este limite.
+max-line-length=120
+# Garante que o Pylint use o mesmo formato de linha que o Black.
+expected-line-ending-format=LF
+
+[DESIGN]
+# Restrições de design para manter a complexidade do código baixa.
+# Limita o número de argumentos para 5, evitando funções muito longas.
+max-args=5
+# Limita o número de variáveis locais, encorajando funções menores e mais focadas.
+max-locals=10
+# Limita o número de branches, o que ajuda a evitar aninhamento de `if/else`.
+max-branches=5
+# Limita o número de statements, evitando funções muito longas e complexas.
+max-statements=20
+
+[SIMILARITIES]
+# Verifica similaridades em todas as linhas, ajudando a identificar código duplicado que poderia ser refatorado.
+min-similarity-lines=2
+ignore-comments=no
+ignore-docstrings=no
+ignore-imports=no
+
+[CLASSES]
+# Força o uso do argumento `self` para métodos de instância.
+# no-self-use=yes
+
+[TYPECHECK]
+# Permite que o Pylint verifique a compatibilidade com a tipagem do Pydantic.
+generated-members=
+    pydantic.BaseModel.*,
+    sqlalchemy.orm.declarative_base.*
+# Remove mensagens de erro de tipo redundantes.
+disable=
+    useless-object-inheritance

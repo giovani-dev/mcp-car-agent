@@ -1,12 +1,8 @@
-from typing import Optional, TypeVar
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from pydantic import BaseModel
 from sqlalchemy.exc import MultipleResultsFound
-from sqlmodel import Field, SQLModel
 
-from mcp_car_agent.core.database.repository.base_repository import BaseRepository
 from tests.mocks.models import MockModel
 from tests.mocks.schemas import MockSchema
 
@@ -304,9 +300,7 @@ class TestBaseRepository:
         with pytest.raises(ValueError, match="Mais de um MockModel encontrado"):
             await repository.get_one(by={"is_active": True})
 
-    async def test_quando_criterio_by_e_vazio_entao_erro_e_levantado(
-        self, repository, mock_session
-    ):
+    async def test_quando_criterio_by_e_vazio_entao_erro_e_levantado(self, repository):
         """
         Verifica se um ValueError é levantado quando 'by' é um dicionário vazio.
 

@@ -50,4 +50,6 @@ generated-members=
     sqlalchemy.orm.declarative_base.*
 # Remove mensagens de erro de tipo redundantes.
 disable=
-    useless-object-inheritance
+    useless-object-inheritance,
+    fixme,
+    missing-module-docstring

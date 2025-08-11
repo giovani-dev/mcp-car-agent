@@ -1,0 +1,34 @@
+name: CI/CD Control
+
+on:
+  pull_request:
+    branches: ["master", "staging", "main"]
+  push:
+    branches: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies with Poetry
+        run: |
+          pip install poetry
+          poetry install
+
+      - name: Run Linter (Pylint)
+        run: poetry run pylint mcp_car_agent
+      
+      - name: Run Tests (Pytest)
+        run: poetry run pytest

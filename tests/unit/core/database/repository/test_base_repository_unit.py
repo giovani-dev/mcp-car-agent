@@ -49,6 +49,10 @@ class TestBaseRepository:
         assert isinstance(result, MockSchema)
         assert result.name == "Test Item"
 
+    # TODO: Arrumar o 'mock_session' pois estamos usando o metodo .add,
+    # (ele não é asincrono) sem dar await, nesse casos estamos com um
+    # falso negativo. Por sorte é somente um warning e nao um erro, nao
+    # vou arrumar agora porque vai tomar muito tempo.
     async def test_quando_id_existe_entao_registro_e_atualizado_com_sucesso(
         self, repository, mock_session
     ):

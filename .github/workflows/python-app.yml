@@ -28,7 +28,7 @@ jobs:
           poetry install
 
       - name: Run Linter (Pylint)
-        run: poetry run pylint mcp_car_agent
+        run: poetry run pylint mcp_car_agent/ tests/
       
       - name: Run Tests (Pytest)
         run: poetry run pytest

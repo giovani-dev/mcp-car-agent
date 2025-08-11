@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "mcp-car-agent"
+version = "1.0.0"
+description = "This project is a Python application that builds a virtual car agent. It models automobiles, populates a database with real data, and uses a custom MCP protocol for communication. The agent interacts with users in a terminal, searches the database, and displays results."
+authors = ["Giovani Liskoski Zanini <giovanilzanini@hotmail.com>"]
+license = "GPL-3.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+loguru = "^0.7.3"
+sqlmodel = "^0.0.24"
+beautifulsoup4 = "^4.13.4"
+fastmcp = "^2.11.2"
+python-dotenv = "^1.1.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+pylint = "^3.3.8"
+isort = "^6.0.1"
+pytest = "^8.4.1"
+pytest-asyncio = "^1.1.0"
+aiosqlite = "^0.21.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

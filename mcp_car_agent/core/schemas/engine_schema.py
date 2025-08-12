@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 
 class EngineSpec(BaseModel):
+    id: Optional[int] = None
     gas_type: Optional[Literal["gasolina", "alcool", "gasolina/alcool"]] = Field(
         max_length=45, min_length=1
     )
@@ -16,9 +17,11 @@ class EngineSpec(BaseModel):
     torque_unit_measure: Optional[Literal["kgfm"]] = Field(
         max_length=10, default="kgfm"
     )
+    engine: Optional["Engine"] = None
 
 
 class Engine(BaseModel):
+    id: Optional[int] = None
     compression_rate: Optional[str] = Field(max_length=10, default=None)
     total_cc: Optional[int] = Field(default=None)
     aspiration: Optional[str] = Field(max_length=45, default=None)

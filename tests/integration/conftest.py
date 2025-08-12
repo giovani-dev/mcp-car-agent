@@ -15,6 +15,10 @@ from mcp_car_agent.core.database.repository.car_repository import (
     CarRepository,
     CarSpecsRepository,
 )
+from mcp_car_agent.core.database.repository.engine_repository import (
+    EngineRepository,
+    EngineSpecRepository,
+)
 from mcp_car_agent.core.schemas.engine_schema import Engine
 from mcp_car_agent.core.schemas.manufacturer_schema import Manufacturer
 from mcp_car_agent.core.schemas.transmission_schema import Transmission
@@ -103,3 +107,15 @@ def car_repository(session: AsyncSession):
 def car_spec_repository(session: AsyncSession):
     """Fornece uma instância de CarSpecRepository para os testes."""
     return CarSpecsRepository(session)
+
+
+@pytest.fixture
+def engine_repository(session: AsyncSession):
+    """Fornece uma instância de EngineRepository para os testes."""
+    return EngineRepository(session=session)
+
+
+@pytest.fixture
+def engine_spec_repository(session: AsyncSession):
+    """Fornece uma instância de EngineSpecRepository para os testes."""
+    return EngineSpecRepository(session=session)

@@ -5,6 +5,7 @@ from pydantic import ValidationError
 
 from mcp_car_agent.core.schemas.car_schema import Car, CarSpecs
 from mcp_car_agent.core.schemas.engine_schema import Engine
+from mcp_car_agent.core.schemas.equipment_schema import Equipment
 from mcp_car_agent.core.schemas.manufacturer_schema import Manufacturer
 from mcp_car_agent.core.schemas.transmission_schema import Transmission
 
@@ -93,6 +94,9 @@ class TestCarSchemas:
         )
         manufacturer_data = Manufacturer(name="Honda")
         car_specs_data = [CarSpecs(doors=4, spaces=5, gas="gasolina", config="sedan")]
+        equipments_data = [
+            Equipment(category="segurança", description="Freio ABS", is_standard=True)
+        ]
 
         data = {
             "name": "Civic",
@@ -101,7 +105,7 @@ class TestCarSchemas:
             "engine": engine_data,
             "transmission": transmission_data,
             "manufacturer": manufacturer_data,
-            "equipments": ["Ar-condicionado"],
+            "equipments": equipments_data,
             "car_specs": car_specs_data,
         }
 

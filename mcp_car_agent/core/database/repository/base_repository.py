@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from typing import Dict, Generic, List, Optional, TypeVar
 
 from pydantic import BaseModel
@@ -11,7 +12,7 @@ T = TypeVar("T", bound=BaseModel)
 M = TypeVar("M", bound=SQLModel)
 
 
-class BaseRepository(Generic[T, M], IDefaultRepository[T]):
+class BaseRepository(Generic[T, M], IDefaultRepository[T], ABC):
     """
     Implementação base genérica da interface IDefaultRepository para SQLModel.
     Esta classe é abstrata e deve ser herdada por repositórios específicos.
@@ -22,12 +23,17 @@ class BaseRepository(Generic[T, M], IDefaultRepository[T]):
         self.model = model
         self.schema = schema
 
+    @abstractmethod
+    async def input(self, data: T) -> M:
+        pass
+
     async def create(self, data: T):
-        db_model = self.model.model_validate(data.model_dump())
+        db_model = await self.input(data)
         self.session.add(db_model)
         await self.session.commit()
         await self.session.refresh(db_model)
-        return self.schema.model_validate(db_model.model_dump())
+        data.id = db_model.id
+        return data
 
     async def update(self, data: T, _id: int):
         existing_db_model = await self.session.get(self.model, _id)
@@ -35,7 +41,8 @@ class BaseRepository(Generic[T, M], IDefaultRepository[T]):
             raise ValueError(f"{self.model.__name__} com ID {_id} não encontrado.")
 
         for key, value in data.model_dump(exclude_unset=True).items():
-            setattr(existing_db_model, key, value)
+            if value and getattr(existing_db_model, key) != value:
+                setattr(existing_db_model, key, value)
 
         self.session.add(existing_db_model)
         await self.session.commit()
